@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/badge/Chrome-Manifest%20V3-176a40" alt="Chrome Manifest V3">
     <img src="https://img.shields.io/badge/runtime_dependencies-zero-176a40" alt="Zero runtime dependencies">
   </p>
-  <p><a href="#installation">Install</a> · <a href="#controls">Controls</a> · <a href="PRIVACY.md">Privacy</a> · <a href="CONTRIBUTING.md">Contribute</a></p>
+  <p><a href="https://github.com/Uriel1010/shekel-converter/releases/latest"><strong>Download latest release</strong></a> · <a href="#installation">Install</a> · <a href="#controls">Controls</a> · <a href="PRIVACY.md">Privacy</a> · <a href="CONTRIBUTING.md">Contribute</a></p>
 </div>
 
 ![Illustrative preview; prices and rates are examples, not live quotes](docs/preview.png)
@@ -31,6 +31,8 @@ The extension interface is currently **Hebrew with right-to-left layout**. Repos
 - **No account, API key, build step, analytics, or runtime dependencies.**
 
 ## Installation
+
+**Current release: [v1.3.0](https://github.com/Uriel1010/shekel-converter/releases/tag/v1.3.0)** · **[Download the extension ZIP](https://github.com/Uriel1010/shekel-converter/releases/download/v1.3.0/shekel-converter-1.3.0.zip)**
 
 This extension is installed locally as an unpacked extension. It is not currently distributed through the Chrome Web Store.
 
