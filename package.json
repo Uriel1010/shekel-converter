@@ -1,9 +1,9 @@
 {
   "name": "shekel-converter",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "private": true,
   "description": "Inline ILS price estimates for Chrome, with contextual currency detection and optional import tax estimates.",
   "license": "MIT",
-  "scripts": {"test": "node test.cjs", "check": "node scripts/check.cjs"},
+  "scripts": {"test": "node test.cjs && node test-content.cjs", "check": "node scripts/check.cjs"},
   "engines": {"node": ">=22"}
 }

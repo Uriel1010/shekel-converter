@@ -27,12 +27,13 @@ The extension interface is currently **Hebrew with right-to-left layout**. Repos
 - **Currency context detection** from selected controls, price metadata, structured data, supported country domains, and ASOS regional paths such as `/au/`.
 - **Fallback selectors** for ambiguous `$` and `¥` symbols when a page provides no usable context.
 - **Dynamic page support** for prices added or changed without a full navigation.
+- **Batched page updates** that yield between work chunks to keep larger pages responsive.
 - **Optional import tax estimate** with its own switch: hide tax estimates while keeping conversion on.
 - **No account, API key, build step, analytics, or runtime dependencies.**
 
 ## Installation
 
-**Current release: [v1.3.0](https://github.com/Uriel1010/shekel-converter/releases/tag/v1.3.0)** · **[Download the extension ZIP](https://github.com/Uriel1010/shekel-converter/releases/download/v1.3.0/shekel-converter-1.3.0.zip)**
+**Current release: [v1.3.1](https://github.com/Uriel1010/shekel-converter/releases/tag/v1.3.1)** · **[Download the extension ZIP](https://github.com/Uriel1010/shekel-converter/releases/download/v1.3.1/shekel-converter-1.3.1.zip)**
 
 This extension is installed locally as an unpacked extension. It is not currently distributed through the Chrome Web Store.
 
@@ -116,6 +117,7 @@ The archive is written to `dist/`, contains only runtime files and the license, 
 | `popup.html` / `popup.js` / `popup.css` | Hebrew settings UI and rate status. |
 | `icons/` | Chrome icon sizes and editable SVG source. |
 | `test.cjs` | Parsing, currency, tax boundary, cache, offline, and preference checks. |
+| `test-content.cjs` | Scanner scheduling, cancellation, fallback, and recovery checks. This harness does not replace real Chrome layout testing. |
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for manual verification and [CHANGELOG.md](CHANGELOG.md) for version history.
 

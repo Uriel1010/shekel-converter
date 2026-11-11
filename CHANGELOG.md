@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.1 — 2026-11-11
+
+- Split page traversal into short tasks and render conversion badges in batches of up to 20 per animation frame, with a Scheduler API fallback.
+- Cancel obsolete scans when preferences change, preserving tax and conversion toggles during long scans.
+- Keep watching page changes between batches and allow scans to recover after DOM errors.
+- Report failed settings saves in the popup and restore the previous values.
+- Use async/await for background messages and handle initialization and refresh failures.
+- Recreate the rate-refresh alarm when Chrome starts; keep durable rate data in local storage.
+- Add scheduling, cancellation, error recovery, storage failure, request-sharing, and worker-restart regression checks.
+
 ## 1.3.0 — 2026-11-11
 
 - Add a custom shekel-and-conversion icon in Chrome toolbar and extension-manager sizes.

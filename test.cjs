@@ -42,10 +42,10 @@ assert.equal(money.taxEstimate(NaN,rates),null);
 async function main() {
   // Exercise the real popup script: switching tax off must preserve conversion
   // and persist after the popup is reopened.
-  let preferences={enabled:true,dollar:'AUD',yen:'JPY',customSetting:'preserved'};
+  let preferences={enabled:true,dollar:'AUD',yen:'JPY',customSetting:'preserved'}, storageFails=false;
   async function popup() {
     const elements=Object.fromEntries(['enabled','showTax','dollar','yen','refresh','status'].map(id=>[id,{listeners:{},addEventListener(type,fn){this.listeners[type]=fn;}}]));
-    const chrome={storage:{local:{get:async()=>({prefs:preferences}),set:async data=>{preferences=data.prefs;}}},runtime:{sendMessage:async()=>({quote:{date:Date.now()}})}};
+    const chrome={storage:{local:{get:async()=>({prefs:preferences}),set:async data=>{if(storageFails)throw Error('storage failed');preferences=data.prefs;}}},runtime:{sendMessage:async()=>({quote:{date:Date.now()}})}};
     await vm.runInNewContext(fs.readFileSync(__dirname+'/popup.js','utf8'),{document:{getElementById:id=>elements[id]},chrome,Date});
     return elements;
   }
@@ -62,12 +62,25 @@ async function main() {
   reopened.showTax.checked=true;
   await reopened.showTax.listeners.change();
   assert.equal(preferences.showTax,true);
-  let store={}, calls=0, fail=false, handler;
-  const context={Date, AbortSignal, chrome:{storage:{local:{get:async()=>store,set:async data=>Object.assign(store,data)}},runtime:{onMessage:{addListener:fn=>handler=fn},onInstalled:{addListener(){}}},alarms:{create(){},onAlarm:{addListener(){}}}},fetch:async()=>{calls++;if(fail)throw Error('offline');return {ok:true,json:async()=>({result:'success',base_code:'ILS',rates,time_last_update_unix:Date.now()/1000,time_next_update_unix:Date.now()/1000+86400})};}};
+  storageFails=true;
+  reopened.showTax.checked=false;
+  await reopened.showTax.listeners.change();
+  assert.equal(preferences.showTax,true,'failed storage writes must not change saved settings');
+  assert.equal(reopened.showTax.checked,true,'failed writes restore the previous switch state');
+  assert.match(reopened.status.textContent,/נכשלה/);
+  assert.equal(reopened.showTax.disabled,false,'controls must recover after a storage error');
+  let store={}, calls=0, fail=false, handler, startup, alarm, alarmCreations=0;
+  const context={Date, AbortSignal, console:{warn(){}}, chrome:{storage:{local:{get:async()=>store,set:async data=>Object.assign(store,data)}},runtime:{onMessage:{addListener:fn=>handler=fn},onInstalled:{addListener(){}},onStartup:{addListener:fn=>startup=fn}},alarms:{create(){alarmCreations++;},onAlarm:{addListener:fn=>alarm=fn}}},fetch:async()=>{calls++;if(fail)throw Error('offline');return {ok:true,json:async()=>({result:'success',base_code:'ILS',rates,time_last_update_unix:Date.now()/1000,time_next_update_unix:Date.now()/1000+86400})};}};
   vm.runInNewContext(fs.readFileSync(__dirname+'/background.js','utf8'),context);
   const get=force=>new Promise(resolve=>handler({type:'rates',force},{},resolve));
   assert.ok((await get()).quote.rates.USD);
   await get(); assert.equal(calls,1,'cache must avoid a second request');
+  await Promise.all([get(true),get(true)]);
+  assert.equal(calls,2,'simultaneous requests should share one network fetch');
+  vm.runInNewContext(fs.readFileSync(__dirname+'/background.js','utf8'),{...context});
+  await get();assert.equal(calls,2,'worker restart must recover persisted rates');
+  await startup();assert.equal(alarmCreations,1,'browser startup must recreate the refresh alarm');
+  await alarm({name:'unrelated'});assert.equal(calls,2);
   fail=true; assert.equal((await get(true)).quote.stale,true,'offline must mark cached rates stale');
   store={}; assert.ok((await get(true)).error,'offline without cache must show an error');
   console.log('PASS: parsing, currency selection, conversion, tax toggle persistence, cache, stale rates, offline errors');

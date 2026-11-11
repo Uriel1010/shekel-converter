@@ -16,6 +16,6 @@ for (const [size, file] of Object.entries(manifest.icons)) {
   assert.equal(png.readUInt32BE(16), Number(size));
   assert.equal(png.readUInt32BE(20), Number(size));
 }
-for (const file of ['background.js', 'money.js', 'content.js', 'popup.js', 'test.cjs'])
+for (const file of ['background.js', 'money.js', 'content.js', 'popup.js', 'test.cjs', 'test-content.cjs'])
   execFileSync(process.execPath, ['--check', path.join(root, file)]);
 console.log('PASS: manifest, runtime references, icon dimensions, versions, JavaScript syntax');

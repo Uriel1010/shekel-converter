@@ -8,3 +8,5 @@ Thumbs.db
 .env.*
 *.pem
 *.key
+.agents/
+skills-lock.json
