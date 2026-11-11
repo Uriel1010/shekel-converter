@@ -1,0 +1,11 @@
+<!doctype html><html lang="he" dir="rtl"><meta charset="utf-8"><title>הכול בשקלים</title><link rel="stylesheet" href="popup.css"><body>
+<h1>הכול בשקלים <span>₪</span></h1><p>המחיר בשקלים, ליד המחיר המקורי.</p>
+<label class="toggle"><input type="checkbox" id="enabled"> המרה אוטומטית באתרים</label>
+<label class="toggle"><input type="checkbox" id="showTax"> הצגת מכס / מע״מ משוער</label>
+<p class="small">אפשר לכבות רק את אומדן המס ולהמשיך לראות מחירים בשקלים. האומדן מוסיף 18% מעל שווי של US$75.</p>
+<label>ברירת מחדל ל־$ כשהאתר לא מציין מטבע<select id="dollar"><option>USD</option><option>CAD</option><option>AUD</option><option>NZD</option><option>HKD</option><option>SGD</option><option>TWD</option><option>MXN</option><option>ARS</option><option>CLP</option></select></label>
+<label>כשמופיע ¥ בלבד<select id="yen"><option>JPY</option><option>CNY</option></select></label>
+<p class="small">המטבע מזוהה מבחירת המטבע ומנתוני המחיר באתר, ובהיעדרם מסיומת מדינה כמו ‎.au. הבחירות כאן משמשות כשאין זיהוי. העבירו עכבר על ההמרה כדי לראות איזה מטבע זוהה.</p>
+<button id="refresh">עדכון שערים</button><p id="status" role="status"></p>
+<footer>שערים יומיים משוערים, ללא עמלות המרה.<br><a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Rates By Exchange Rate API</a></footer>
+<script src="popup.js"></script></body></html>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Shekel Converter">
+  <rect width="128" height="128" rx="28" fill="#123e31"/>
+  <path d="M29 89V39H58Q74 39 74 55V79M47 50V89H72Q88 89 88 73V39" fill="none" stroke="#f4fff8" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M27 25H96M89 18L96 25L89 32M101 103H32M39 96L32 103L39 110" fill="none" stroke="#8ee6b4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
